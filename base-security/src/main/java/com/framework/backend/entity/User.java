@@ -3,29 +3,27 @@ package com.framework.backend.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Collection;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
  * @author fucong
  * @description 用户表
  * @since 2025/6/25 15:43
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @TableName("security_user")
 @JsonFilter("security_user")
 @Schema(description = "用户表")
 @AllArgsConstructor
 @Data
-public class User extends MyBaseEntity implements UserDetails {
+public class User implements UserDetails {
   private static final long serialVersionUID = 1L;
 
   @Schema(description = "登录名")

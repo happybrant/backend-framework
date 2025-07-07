@@ -6,11 +6,10 @@ import com.framework.backend.entity.User;
 import com.framework.backend.mapper.UserMapper;
 import com.framework.backend.service.RoleService;
 import com.framework.backend.service.UserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author fucong
@@ -29,7 +28,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user == null) {
       throw new UsernameNotFoundException("用户不存在！");
     }
-    List<String> roleCodes = roleService.getByUserId(user.getId());
+    List<String> roleCodes = roleService.getByUserId(user.getAvatar());
     user.setRoleCodes(roleCodes);
     return user;
   }

@@ -5,10 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.framework.backend.mapper")
-public class BaseSecurityApplication {
+public class BaseUtilityApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(BaseSecurityApplication.class, args);
+    SpringApplication.run(BaseUtilityApplication.class, args);
   }
 }

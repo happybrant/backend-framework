@@ -7,12 +7,11 @@ import com.framework.backend.entity.UserRoleRel;
 import com.framework.backend.mapper.RoleMapper;
 import com.framework.backend.mapper.UserRoleMapper;
 import com.framework.backend.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author fucong

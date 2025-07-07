@@ -3,7 +3,6 @@ package com.framework.backend.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,11 +13,11 @@ import lombok.EqualsAndHashCode;
  * @since 2025/6/25 16:04
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @TableName("security_user_role_rel")
 @JsonFilter("security_user_role_rel")
 @Schema(description = "用户角色关联表")
-public class UserRoleRel extends MyBaseEntity {
+public class UserRoleRel {
   private static final long serialVersionUID = 1L;
 
   @Schema(description = "用户id")
