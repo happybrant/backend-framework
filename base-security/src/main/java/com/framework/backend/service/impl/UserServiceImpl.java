@@ -28,7 +28,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     if (user == null) {
       throw new UsernameNotFoundException("用户不存在！");
     }
-    List<String> roleCodes = roleService.getByUserId(user.getAvatar());
+    List<String> roleCodes = roleService.getByUserId(user.getId());
     user.setRoleCodes(roleCodes);
     return user;
   }

@@ -3,11 +3,11 @@ package com.framework.backend.common;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author fucong
@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode()
 public class MyBaseEntity implements Serializable {
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
 
   @TableId(value = "ID")
   protected String id;

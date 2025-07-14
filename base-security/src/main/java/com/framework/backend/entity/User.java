@@ -3,12 +3,12 @@ package com.framework.backend.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,9 +22,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @JsonFilter("security_user")
 @Schema(description = "用户表")
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class User implements UserDetails {
-  private static final long serialVersionUID = 1L;
+public class User extends MyBaseEntity implements UserDetails {
+  @Serial private static final long serialVersionUID = 1L;
 
   @Schema(description = "登录名")
   @TableField(value = "username", keepGlobalFormat = true)
@@ -54,8 +55,13 @@ public class User implements UserDetails {
   @TableField("status")
   private String status;
 
+  @TableField(exist = false)
+  private String token;
+
+  @TableField(exist = false)
   private List<String> roleCodes;
 
+  @Setter
   @TableField(exist = false)
   protected Collection<? extends GrantedAuthority> authorities;
 
@@ -64,27 +70,23 @@ public class User implements UserDetails {
     return this.authorities;
   }
 
-  public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-    this.authorities = authorities;
-  }
-
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 }

@@ -1,11 +1,14 @@
 package com.framework.backend;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootTest
-class BaseSecurityApplicationTests {
+public class BaseSecurityApplicationTests {
 
   @Test
-  void contextLoads() {}
+  public void test() {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    String encode = encoder.encode("123456");
+    System.out.println(encode);
+  }
 }

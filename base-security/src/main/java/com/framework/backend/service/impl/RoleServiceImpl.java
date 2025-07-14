@@ -27,8 +27,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   public List<String> getByUserId(String id) {
     List<String> roleCodes = new ArrayList<>();
     QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+    queryWrapper.lambda().eq(UserRoleRel::getUserId, id);
     List<UserRoleRel> userRoleRelList = userRoleMapper.selectList(queryWrapper);
-    if (userRoleRelList != null) {
+    if (!userRoleRelList.isEmpty()) {
       List<String> roleIds =
           userRoleRelList.stream().map(UserRoleRel::getRoleId).collect(Collectors.toList());
       List<Role> roles = listByIds(roleIds);
