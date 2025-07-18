@@ -3,6 +3,7 @@ package com.framework.backend.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serial;
@@ -24,6 +25,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonIgnoreProperties({
+  "password",
+  "authorities",
+  "enabled",
+  "accountNonExpired",
+  "accountNonLocked",
+  "credentialsNonExpired"
+})
 public class User extends MyBaseEntity implements UserDetails {
   @Serial private static final long serialVersionUID = 1L;
 
@@ -54,9 +63,6 @@ public class User extends MyBaseEntity implements UserDetails {
   @Schema(description = "状态")
   @TableField("status")
   private String status;
-
-  @TableField(exist = false)
-  private String token;
 
   @TableField(exist = false)
   private List<String> roleCodes;

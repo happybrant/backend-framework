@@ -222,4 +222,14 @@ public class RedisCache {
   public Collection<String> keys(final String pattern) {
     return redisTemplate.keys(pattern);
   }
+
+  /**
+   * 判断缓存是否存在
+   *
+   * @param pattern
+   * @return
+   */
+  public Boolean exist(final String pattern) {
+    return redisTemplate.hasKey(pattern);
+  }
 }

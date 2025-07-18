@@ -1,8 +1,8 @@
 package com.framework.backend.config;
 
 import com.framework.backend.config.handler.*;
-import com.framework.backend.utils.CacheManager;
 import jakarta.annotation.Resource;
+import java.util.Arrays;
 import java.util.Collections;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,14 +31,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity // 启用Spring Security
 public class SecurityConfig {
 
-  @Resource private MyUserDetailsService myUserDetailsService;
-
   @Resource private MyLoginSuccessHandler loginSuccessHandler;
   @Resource private MyLoginFailureHandler loginFailureHandler;
   @Resource private MyAuthenticationEntryPoint loginAuthenticationHandler;
   @Resource private MyAccessDeniedHandler loginAccessDefineHandler;
+  @Resource private MyLogoutSuccessHandler logoutSuccessHandler;
+  @Resource private MyLogoutHandler logoutHandler;
   @Resource private CheckTokenFilter checkTokenFilter;
-  @Resource private CacheManager cacheManager;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -51,8 +50,9 @@ public class SecurityConfig {
   @Value("${base.security.login.url}")
   public String loginUrl;
 
-  public String usernameParameter = "account";
-  public String passwordParameter = "password";
+  private final String usernameParameter = "account";
+  private final String passwordParameter = "password";
+  private final String logoutUrl = "/security/user/logout";
 
   /**
    * 新版的实现方法不再和旧版一样在配置类里面重写方法，而是构建了一个过滤链对象并通过@Bean注解注入到IOC容器中 新版整体代码
@@ -98,7 +98,7 @@ public class SecurityConfig {
     http // 使用自己自定义的过滤器 去过滤接口请求
         .addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class)
         .formLogin(
-            (formLogin) ->
+            formLogin ->
                 // 这里更改SpringSecurity的认证接口地址，这样就默认处理这个接口的登录请求了
                 formLogin
                     .loginProcessingUrl(loginUrl)
@@ -107,6 +107,12 @@ public class SecurityConfig {
                     // 　自定义的登录验证成功或失败后的去向
                     .successHandler(loginSuccessHandler)
                     .failureHandler(loginFailureHandler))
+        .logout(
+            logout ->
+                logout
+                    .logoutUrl(logoutUrl)
+                    .addLogoutHandler(logoutHandler)
+                    .logoutSuccessHandler(logoutSuccessHandler))
         // 禁用了 CSRF 保护。
         .csrf(AbstractHttpConfigurer::disable)
         // 配置了会话管理策略为 STATELESS（无状态）。在无状态的会话管理策略下，应用程序不会创建或使用 HTTP 会话，每个请求都是独立的，服务器不会在请求之间保留任何状态信息。
@@ -144,7 +150,7 @@ public class SecurityConfig {
     corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
     corsConfiguration.setAllowedOrigins(Collections.singletonList("*"));
     corsConfiguration.setMaxAge(3600L);
-
+    corsConfiguration.setExposedHeaders(Arrays.asList("x-auth-token"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfiguration);
     return source;

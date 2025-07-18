@@ -1,7 +1,9 @@
 package com.framework.backend.config;
 
+import com.framework.backend.common.AuthConstant;
 import com.framework.backend.config.exception.CustomerAuthenticationException;
 import com.framework.backend.config.handler.MyLoginFailureHandler;
+import com.framework.backend.entity.User;
 import com.framework.backend.utils.RedisCache;
 import com.framework.backend.utils.TokenUtil;
 import jakarta.annotation.Resource;
@@ -18,11 +20,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * @author fucong
+ * @since 2023/11/30 17:07
+ * @description token校验
+ */
 @Data
 @Component("checkTokenFilter")
 @EqualsAndHashCode(callSuper = false)
@@ -73,27 +79,25 @@ public class CheckTokenFilter extends OncePerRequestFilter {
   // token验证
   private void validateToken(HttpServletRequest request) {
     // 从请求的头部获取token
-    String token = request.getHeader("token");
+    String token = request.getHeader("Authorization");
     // 如果请求头部没有获取到token，则从请求参数中获取token
     if (StringUtils.isEmpty(token)) {
-      token = request.getParameter("token");
-    }
-    if (StringUtils.isEmpty(token)) {
-      // 请求参数中也没有 那就从redis中进行获取根据ip地址取
-      token = redisCache.getCacheObject(request.getRemoteAddr());
+      token = request.getParameter("Authorization");
     }
     if (StringUtils.isEmpty(token)) {
       throw new CustomerAuthenticationException("token不存在！");
     }
+    token = token.replace("Bearer ", "");
     // 解析token
     String username = TokenUtil.getUserFromToken(token);
     if (StringUtils.isEmpty(username)) {
-      throw new CustomerAuthenticationException("token解析失败!");
+      throw new CustomerAuthenticationException("无效的token!");
     }
-    // 获取用户信息
-    UserDetails user = myUserDetailsService.loadUserByUsername(username);
+    String uuid = TokenUtil.getIdFromToken(token);
+    User user = redisCache.getCacheObject(AuthConstant.buildLoginKey(uuid));
     if (user == null) {
-      throw new CustomerAuthenticationException("token验证失败!");
+      // 用户已经退出登录
+      throw new CustomerAuthenticationException("token失效!");
     }
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

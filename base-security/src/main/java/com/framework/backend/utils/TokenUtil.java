@@ -84,6 +84,15 @@ public class TokenUtil {
     return user;
   }
 
+  public static String getIdFromToken(String token) {
+    String uuid = "";
+    Claims claims = parseClaims(token);
+    if (claims != null) {
+      uuid = claims.getId();
+    }
+    return uuid;
+  }
+
   /**
    * 获取JWT令牌的过期时间
    *

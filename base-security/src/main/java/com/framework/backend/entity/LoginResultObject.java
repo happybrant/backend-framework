@@ -14,5 +14,4 @@ public class LoginResultObject {
   private User userInfo;
   private String token;
   private Long expireTime;
-  private Long code;
 }
