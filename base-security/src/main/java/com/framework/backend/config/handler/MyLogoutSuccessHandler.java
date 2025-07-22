@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author fucong
- * @since 2023/11/30 17:07
+ * @since 2025/07/20 17:07
  * @description 成功退出处理器
  */
 @Component("logoutSuccessHandler")

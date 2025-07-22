@@ -1,4 +1,4 @@
-package com.framework.backend.config;
+package com.framework.backend.config.redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

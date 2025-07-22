@@ -17,7 +17,7 @@ public class SecurityUtil {
    *
    * @return
    */
-  public static User getCurrentLoginUser() {
+  public static User getCurrentUser() {
     return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 

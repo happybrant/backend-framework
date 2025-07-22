@@ -25,7 +25,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok-version>1.18.34</lombok-version>
-        <mybatis-plus-spring-boot3-starter-version>3.5.9</mybatis-plus-spring-boot3-starter-version>
+        <mybatis-plus-spring-boot3-starter-version>3.5.7</mybatis-plus-spring-boot3-starter-version>
         <mysql-connector-java-version>8.0.27</mysql-connector-java-version>
         <spring-boot-dependencies-version>3.4.4</spring-boot-dependencies-version>
         <mybatis-spring-boot-version>3.0.3</mybatis-spring-boot-version>
@@ -39,11 +39,6 @@
                 <version>${spring-boot-dependencies-version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.boot</groupId>
-                <artifactId>nacos-config-spring-boot-starter</artifactId>
-                <version>${nacos-config-spring-boot-starter-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>

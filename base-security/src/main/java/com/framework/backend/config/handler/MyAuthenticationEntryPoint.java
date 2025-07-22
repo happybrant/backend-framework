@@ -7,16 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 /**
- * 主要用来做响应体序列化
- *
  * @author fucong
- * @since 2023/6/4
+ * @since 2025/07/22 17:07
+ * @description 匿名用户访问资源处理器
  */
 @Component("myAuthenticationHandler")
 public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -27,7 +25,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
       AuthenticationException e)
       throws IOException {
     httpServletResponse.setContentType("application/json;charset=utf-8");
-    httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     ResponseData<Object> result = new ResponseData<>(ResultCode.UNAUTHORIZED);
     PrintWriter out = httpServletResponse.getWriter();
     out.write(JSON.toJSONString(result));

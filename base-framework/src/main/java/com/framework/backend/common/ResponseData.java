@@ -1,6 +1,7 @@
 package com.framework.backend.common;
 
 import com.framework.backend.enums.ResultCode;
+import java.io.Serial;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseData<T> implements Serializable {
 
-  private static final long serialVersionUID = -4304353934293881342L;
+  @Serial private static final long serialVersionUID = -4304353934293881342L;
 
   /** 信息 */
   private String message;
