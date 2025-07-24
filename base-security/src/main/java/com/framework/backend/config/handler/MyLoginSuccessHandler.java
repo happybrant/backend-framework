@@ -3,9 +3,9 @@ package com.framework.backend.config.handler;
 import com.alibaba.fastjson2.JSON;
 import com.framework.backend.common.AuthConstant;
 import com.framework.backend.common.ResponseData;
-import com.framework.backend.entity.LoginResultObject;
-import com.framework.backend.entity.User;
 import com.framework.backend.enums.ResultCode;
+import com.framework.backend.model.entity.User;
+import com.framework.backend.model.vo.LoginResultObject;
 import com.framework.backend.utils.RedisCache;
 import com.framework.backend.utils.TokenUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +48,7 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
     vo.setUserInfo(user);
     // 将用户存入redis中
     redisCache.setCacheObject(
-        AuthConstant.buildLoginKey(uuid), user, TokenUtil.ACCESS_EXPIRE, TimeUnit.MILLISECONDS);
+        AuthConstant.buildLoginKey(uuid), user, TokenUtil.ACCESS_EXPIRE, TimeUnit.SECONDS);
     vo.setToken(token);
     vo.setExpireTime(expireTime);
     result.setData(vo);

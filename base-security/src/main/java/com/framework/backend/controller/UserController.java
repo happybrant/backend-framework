@@ -1,6 +1,7 @@
 package com.framework.backend.controller;
 
-import com.framework.backend.entity.User;
+import com.framework.backend.model.entity.User;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +12,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/security/user")
+@Tag(name = "UserController", description = "用户管理(0101)")
 public class UserController {
 
   @PostMapping("/add")
   public void addUser(@RequestBody User user) {}
 
-  @PreAuthorize("hasRole('Role_admin')")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
   @GetMapping("/getOne")
   public String getOne(@RequestBody User user) {
     return "hello world！";

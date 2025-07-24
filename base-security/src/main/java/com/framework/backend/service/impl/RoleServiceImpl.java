@@ -2,10 +2,10 @@ package com.framework.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.framework.backend.entity.Role;
-import com.framework.backend.entity.UserRoleRel;
 import com.framework.backend.mapper.RoleMapper;
 import com.framework.backend.mapper.UserRoleMapper;
+import com.framework.backend.model.entity.Role;
+import com.framework.backend.model.entity.UserRoleRel;
 import com.framework.backend.service.RoleService;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author fucong
- * @description To do
+ * @description 角色服务实现类
  * @since 2025/6/26 13:48
  */
 @Service

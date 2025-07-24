@@ -3,7 +3,7 @@ package com.framework.backend.config;
 import com.framework.backend.common.AuthConstant;
 import com.framework.backend.config.exception.CustomerAuthenticationException;
 import com.framework.backend.config.handler.MyLoginFailureHandler;
-import com.framework.backend.entity.User;
+import com.framework.backend.model.entity.User;
 import com.framework.backend.utils.RedisCache;
 import com.framework.backend.utils.TokenUtil;
 import jakarta.annotation.Resource;

@@ -1,4 +1,4 @@
-package com.framework.backend.entity;
+package com.framework.backend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -66,6 +66,9 @@ public class User extends MyBaseEntity implements UserDetails {
 
   @TableField(exist = false)
   private List<String> roleCodes;
+
+  @TableField(exist = false)
+  private List<String> permissions;
 
   @Setter
   @TableField(exist = false)

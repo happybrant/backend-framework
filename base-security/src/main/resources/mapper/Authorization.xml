@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.backend.mapper.AuthorizationMapper">
+    <select id="selectByUserId" resultType="com.framework.backend.model.entity.Resource">
+        SELECT
+        DISTINCT D.*
+        FROM
+        security_user A
+        LEFT JOIN security_user_role_rel B ON A.id = B.user_id
+        LEFT JOIN security_authorization C ON B.role_id = C.role_id
+        LEFT JOIN security_resource D ON C.resource_id = D.id
+        WHERE
+        A.id = #{userId}
+    </select>
+</mapper>

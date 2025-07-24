@@ -1,7 +1,7 @@
-package com.kongfu.backend.config;
+package com.framework.backend.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.framework.backend.entity.User;
+import com.framework.backend.model.entity.User;
 import com.framework.backend.utils.SecurityUtil;
 import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
@@ -10,14 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author 付聪
+ * @author fucong
+ * @since 2025/07/11 17:07
+ * @description mybatis-plus 默认字段填充策略
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
   private static final Logger logger = LoggerFactory.getLogger(MyMetaObjectHandler.class);
 
   @Override
-  /** 创建记录时还需要同时修改更新相关的字段信息 */
   public void insertFill(MetaObject metaObject) {
     logger.debug("start insert fill ....");
     // 注意这里的fieldName是实体字段名称，而不是数据库字段名称！

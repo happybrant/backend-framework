@@ -1,4 +1,4 @@
-package com.framework.backend.entity;
+package com.framework.backend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,22 +11,22 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author fucong
- * @description 用户角色关联表
- * @since 2025/6/25 16:04
+ * @description 授权表
+ * @since 2025/7/24 15:38
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("security_user_role_rel")
-@JsonFilter("security_user_role_rel")
-@Schema(description = "用户角色关联表")
-public class UserRoleRel extends MyBaseEntity {
+@TableName("security_authorization")
+@JsonFilter("security_authorization")
+@Schema(description = "授权表")
+public class Authorization extends MyBaseEntity {
   @Serial private static final long serialVersionUID = 1L;
 
-  @Schema(description = "用户id")
-  @TableField("user_id")
-  private String userId;
-
-  @Schema(description = "角色id")
+  @Schema(description = "角色外键")
   @TableField("role_id")
   private String roleId;
+
+  @Schema(description = "资源外键")
+  @TableField("resource_id")
+  private String resourceId;
 }

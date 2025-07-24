@@ -1,6 +1,6 @@
 package com.framework.backend.utils;
 
-import com.framework.backend.entity.User;
+import com.framework.backend.model.entity.User;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

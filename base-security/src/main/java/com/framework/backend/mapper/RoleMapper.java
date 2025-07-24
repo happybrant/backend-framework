@@ -1,7 +1,7 @@
 package com.framework.backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.framework.backend.entity.Role;
+import com.framework.backend.model.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

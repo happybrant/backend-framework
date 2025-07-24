@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,7 +28,7 @@ public class MyBaseEntity implements Serializable {
 
   /** 创建时间 */
   @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
-  protected Date createTime;
+  protected LocalDateTime createTime;
 
   /** 修改用户 */
   @TableField(value = "UPDATE_USER", fill = FieldFill.INSERT_UPDATE)
@@ -36,7 +36,7 @@ public class MyBaseEntity implements Serializable {
 
   /** 修改时间 */
   @TableField(value = "UPDATE_TIME", fill = FieldFill.INSERT_UPDATE)
-  protected Date updateTime;
+  protected LocalDateTime updateTime;
 
   @TableField(exist = false)
   protected Long pageSize;

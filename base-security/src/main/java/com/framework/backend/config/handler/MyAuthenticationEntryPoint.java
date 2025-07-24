@@ -24,6 +24,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
       HttpServletResponse httpServletResponse,
       AuthenticationException e)
       throws IOException {
+    // 返回http 401 未授权错误信息
     httpServletResponse.setContentType("application/json;charset=utf-8");
     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     ResponseData<Object> result = new ResponseData<>(ResultCode.UNAUTHORIZED);

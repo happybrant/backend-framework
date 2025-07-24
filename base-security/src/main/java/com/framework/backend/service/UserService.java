@@ -1,11 +1,11 @@
 package com.framework.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.framework.backend.entity.User;
+import com.framework.backend.model.entity.User;
 
 /**
  * @author fucong
- * @description To do
+ * @description 用户服务接口
  * @since 2025/6/26 13:47
  */
 public interface UserService extends IService<User> {

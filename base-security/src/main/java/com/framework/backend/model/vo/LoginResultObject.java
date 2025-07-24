@@ -1,5 +1,6 @@
-package com.framework.backend.entity;
+package com.framework.backend.model.vo;
 
+import com.framework.backend.model.entity.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

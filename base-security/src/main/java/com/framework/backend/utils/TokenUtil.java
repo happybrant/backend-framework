@@ -60,12 +60,18 @@ public class TokenUtil {
         .and()
         // 设置自定义负载信息
         .claim("username", username)
-        .id(uuid) // 令牌ID
-        .expiration(expireDate) // 过期日期
-        .issuedAt(new Date()) // 签发时间
-        .subject(SUBJECT) // 主题
-        .issuer(JWT_ISS) // 签发者
-        .signWith(KEY, ALGORITHM) // 签名
+        // 令牌ID
+        .id(uuid)
+        // 过期日期
+        .expiration(expireDate)
+        // 签发时间
+        .issuedAt(new Date())
+        // 主题
+        .subject(SUBJECT)
+        // 签发者
+        .issuer(JWT_ISS)
+        // 签名
+        .signWith(KEY, ALGORITHM)
         .compact();
   }
 
