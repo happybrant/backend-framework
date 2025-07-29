@@ -33,6 +33,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+  private final String usernameParameter = "account";
+  private final String passwordParameter = "password";
+  private final String logoutUrl = "/security/user/logout";
+
+  @Value("${base.security.permit.urls}")
+  public String permitCustomUrls;
+
+  @Value("${base.security.login.url}")
+  public String loginUrl;
+
   @Resource private MyLoginSuccessHandler loginSuccessHandler;
   @Resource private MyLoginFailureHandler loginFailureHandler;
   @Resource private MyAuthenticationEntryPoint loginAuthenticationHandler;
@@ -45,16 +55,6 @@ public class SecurityConfig {
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-
-  @Value("${base.security.permit.urls}")
-  public String permitCustomUrls;
-
-  @Value("${base.security.login.url}")
-  public String loginUrl;
-
-  private final String usernameParameter = "account";
-  private final String passwordParameter = "password";
-  private final String logoutUrl = "/security/user/logout";
 
   /**
    * 新版的实现方法不再和旧版一样在配置类里面重写方法，而是构建了一个过滤链对象并通过@Bean注解注入到IOC容器中 新版整体代码
@@ -134,7 +134,7 @@ public class SecurityConfig {
         .exceptionHandling(
             (exceptionHandling) ->
                 exceptionHandling
-                    .authenticationEntryPoint(loginAuthenticationHandler) // 匿名处理
+                    // .authenticationEntryPoint(loginAuthenticationHandler) // 匿名处理
                     .accessDeniedHandler(loginAccessDefineHandler) // 无权限处理
             )
         .cors((cors) -> cors.configurationSource(configurationSource()))

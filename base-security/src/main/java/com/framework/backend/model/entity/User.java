@@ -36,6 +36,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User extends MyBaseEntity implements UserDetails {
   @Serial private static final long serialVersionUID = 1L;
 
+  @Setter
+  @TableField(exist = false)
+  protected Collection<? extends GrantedAuthority> authorities;
+
   @Schema(description = "登录名")
   @TableField(value = "username", keepGlobalFormat = true)
   private String username;
@@ -64,15 +68,19 @@ public class User extends MyBaseEntity implements UserDetails {
   @TableField("status")
   private String status;
 
+  @Schema(description = "新密码")
+  @TableField(exist = false)
+  private String newPassword;
+
+  @Schema(description = "旧密码")
+  @TableField(exist = false)
+  private String oldPassword;
+
   @TableField(exist = false)
   private List<String> roleCodes;
 
   @TableField(exist = false)
   private List<String> permissions;
-
-  @Setter
-  @TableField(exist = false)
-  protected Collection<? extends GrantedAuthority> authorities;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

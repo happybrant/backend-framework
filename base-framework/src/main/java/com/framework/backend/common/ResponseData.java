@@ -29,14 +29,7 @@ public class ResponseData<T> implements Serializable {
 
   /** 数据对象 */
   private T data;
-
-  public ResponseData<T> success(T data) {
-    return new ResponseData<>(ResultCode.SUCCESS.getMessage(), ResultCode.SUCCESS.getCode(), data);
-  }
-
-  public ResponseData<T> fail(T data) {
-    return new ResponseData<>(ResultCode.FAIL.getMessage(), ResultCode.FAIL.getCode(), data);
-  }
+  
 
   public ResponseData(Integer code, String message) {
     this.code = code;
@@ -52,5 +45,73 @@ public class ResponseData<T> implements Serializable {
   public ResponseData(ResultCode resultCode) {
     this.code = resultCode.getCode();
     this.message = resultCode.getMessage();
+  }
+
+  /** 成功返回结果 */
+
+  public ResponseData(Integer code, String message, T data) {
+    this.code = code;
+    this.message = message;
+    this.data = data;
+  }
+
+
+  /**
+   * 成功返回结果
+   */
+  public static <T> ResponseData<T> success() {
+    return new ResponseData<>(ResultCode.SUCCESS, null);
+  }
+
+  /**
+   * 成功返回结果
+   *
+   * @param data 获取的数据
+   */
+  public static <T> ResponseData<T> success(T data) {
+    return new ResponseData<>(ResultCode.SUCCESS, data);
+  }
+
+  /**
+   * 成功返回结果
+   *
+   * @param data 获取的数据
+   * @param message 提示信息
+   */
+  public static <T> ResponseData<T> success(T data, String message) {
+    return new ResponseData<>(ResultCode.SUCCESS.getCode(), message, data);
+  }
+
+  /**
+   * 失败返回结果
+   *
+   * @param errorCode 错误码
+   */
+  public static <T> ResponseData<T> failed(IErrorCode errorCode) {
+    return new ResponseData<>(errorCode.getCode(), errorCode.getMessage(), null);
+  }
+
+  /**
+   * 失败返回结果
+   *
+   * @param errorCode 错误码
+   * @param message 错误信息
+   */
+  public static <T> ResponseData<T> failed(IErrorCode errorCode, String message) {
+    return new ResponseData<>(errorCode.getCode(), message, null);
+  }
+
+  /**
+   * 失败返回结果
+   *
+   * @param message 提示信息
+   */
+  public static <T> ResponseData<T> failed(String message) {
+    return new ResponseData<>(ResultCode.FAILED.getCode(), message, null);
+  }
+
+  /** 失败返回结果 */
+  public static <T> ResponseData<T> failed() {
+    return failed(ResultCode.FAILED);
   }
 }

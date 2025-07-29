@@ -1,8 +1,13 @@
 package com.framework.backend.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.framework.backend.common.MyBaseEntity;
+import com.framework.backend.common.MyPage;
 import com.framework.backend.model.entity.User;
+import com.framework.backend.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +21,44 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "UserController", description = "用户管理(0101)")
 public class UserController {
 
-  @PostMapping("/add")
-  public void addUser(@RequestBody User user) {
-    if (StringUtils.isNotBlank(user.getPassword())) {
-      // 没有密码使用默认密码
+  @Autowired private UserService userService;
 
-    }
+  @Operation(description = "分页查找用户")
+  @PostMapping("/pageList")
+  public MyPage<User> pageList(@RequestBody User user) {
+    return userService.pageList(user);
   }
 
+  @Operation(description = "分页查找图片抓拍")
+  @PostMapping("/getOne")
+  public User getOne(@RequestBody User user) {
+    QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+    queryWrapper.lambda().eq(MyBaseEntity::getId, user.getId());
+    return userService.getOne(queryWrapper);
+  }
+
+  @Operation(description = "添加用户")
   @PreAuthorize("hasAuthority('ROLE_admin')")
-  @GetMapping("/getOne")
-  public String getOne() {
-    return "hello world！";
+  @PostMapping("/add")
+  public void addUser(@RequestBody User user) {
+    userService.addUser(user);
+  }
+
+  @Operation(description = "修改用户信息")
+  @PostMapping("/update")
+  public void updateUser(@RequestBody User user) {
+    userService.updateUser(user);
+  }
+
+  @Operation(description = "修改用户密码")
+  @PostMapping("/updatePwd")
+  public void updatePwd(@RequestBody User user) {
+    userService.updatePwd(user);
+  }
+
+  @Operation(description = "重置用户密码")
+  @PostMapping("/resetPwd")
+  public void resetPwd(@RequestBody User user) {
+    userService.resetPwd(user);
   }
 }
