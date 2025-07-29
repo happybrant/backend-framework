@@ -6,9 +6,9 @@
         DISTINCT D.*
         FROM
         security_user A
-        LEFT JOIN security_user_role_rel B ON A.id = B.user_id
-        LEFT JOIN security_authorization C ON B.role_id = C.role_id
-        LEFT JOIN security_resource D ON C.resource_id = D.id
+        RIGHT JOIN security_user_role_rel B ON A.id = B.user_id
+        RIGHT JOIN security_authorization C ON B.role_id = C.role_id
+        RIGHT JOIN security_resource D ON C.resource_id = D.id
         WHERE
         A.id = #{userId}
     </select>

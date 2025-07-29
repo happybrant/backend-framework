@@ -20,13 +20,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * @author fucong
- * @since 2023/11/30 17:07
+ * @since 2025/06/30 17:07
  * @description token校验
  */
 @Data
@@ -101,7 +100,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
     }
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+    // authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     // 设置到spring security上下文
     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
   }

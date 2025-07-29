@@ -1,10 +1,9 @@
 package com.framework.backend.common;
 
 /**
- * 认证的常量
- *
- * @author ALI
- * @since 2023/6/10
+ * @author fucong
+ * @since 2025/06/30 17:07
+ * @description 认证的常量
  */
 public class AuthConstant {
 
