@@ -18,8 +18,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -62,14 +62,9 @@ public class CheckTokenFilter extends OncePerRequestFilter {
       // 是登录请求放行
       filterChain.doFilter(httpServletRequest, httpServletResponse);
     } else {
-      try {
-        // token验证（如果不是登录请求 验证token）
-        if (!url.equals(loginUrl)) {
-          validateToken(httpServletRequest);
-        }
-      } catch (AuthenticationException e) {
-        loginFailureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse, e);
-        return;
+      // token验证（如果不是登录请求 验证token）
+      if (!url.equals(loginUrl)) {
+        validateToken(httpServletRequest);
       }
       filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
@@ -100,7 +95,7 @@ public class CheckTokenFilter extends OncePerRequestFilter {
     }
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-    // authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     // 设置到spring security上下文
     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
   }

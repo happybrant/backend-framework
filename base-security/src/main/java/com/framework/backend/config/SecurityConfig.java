@@ -134,7 +134,7 @@ public class SecurityConfig {
         .exceptionHandling(
             (exceptionHandling) ->
                 exceptionHandling
-                    // .authenticationEntryPoint(loginAuthenticationHandler) // 匿名处理
+                    .authenticationEntryPoint(loginAuthenticationHandler) // 匿名处理
                     .accessDeniedHandler(loginAccessDefineHandler) // 无权限处理
             )
         .cors((cors) -> cors.configurationSource(configurationSource()))

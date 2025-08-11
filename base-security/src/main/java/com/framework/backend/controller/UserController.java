@@ -29,8 +29,9 @@ public class UserController {
     return userService.pageList(user);
   }
 
-  @Operation(description = "分页查找图片抓拍")
+  @Operation(description = "获取单条记录")
   @PostMapping("/getOne")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
   public User getOne(@RequestBody User user) {
     QueryWrapper<User> queryWrapper = new QueryWrapper<>();
     queryWrapper.lambda().eq(MyBaseEntity::getId, user.getId());

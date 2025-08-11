@@ -30,4 +30,14 @@ public enum ResultCode implements IErrorCode {
     this.code = code;
     this.message = message;
   }
+
+  @Override
+  public String getMessage() {
+    return message;
+  }
+
+  @Override
+  public int getCode() {
+    return code;
+  }
 }
