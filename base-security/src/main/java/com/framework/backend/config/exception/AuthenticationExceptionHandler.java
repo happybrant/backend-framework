@@ -4,12 +4,9 @@ import com.framework.backend.common.ResponseData;
 import com.framework.backend.enums.ResultCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @description 捕获认证异常
  * @since 2025/08/11 15:43
  */
-@ControllerAdvice
+// @ControllerAdvice
 @Slf4j
 public class AuthenticationExceptionHandler {
 
@@ -35,10 +32,7 @@ public class AuthenticationExceptionHandler {
   public Object authorizationException(
       HttpServletRequest request, HttpServletResponse response, Exception e) {
     response.setStatus(ResultCode.UNAUTHORIZED.getCode());
-    ResponseData<String> result = new ResponseData<>();
-    result.setCode(ResultCode.UNAUTHORIZED.getCode());
-    result.setMessage(ResultCode.UNAUTHORIZED.getMessage());
-    return result;
+    return new ResponseData<String>(ResultCode.UNAUTHORIZED);
   }
 
   /**
@@ -56,17 +50,6 @@ public class AuthenticationExceptionHandler {
       HttpServletResponse response,
       AuthorizationDeniedException accessDeniedException) {
     response.setStatus(ResultCode.FORBIDDEN.getCode());
-    ResponseData<String> result = new ResponseData<>(ResultCode.FORBIDDEN);
-    String str = getExceptionStackTrace(accessDeniedException);
-    result.setData(str);
-    return result;
-  }
-
-  private String getExceptionStackTrace(Exception exception) {
-    StringWriter sw = new StringWriter();
-    exception.printStackTrace(new PrintWriter(sw, true));
-    String str = sw.toString();
-    log.info(str);
-    return str;
+    return new ResponseData<String>(ResultCode.FORBIDDEN);
   }
 }

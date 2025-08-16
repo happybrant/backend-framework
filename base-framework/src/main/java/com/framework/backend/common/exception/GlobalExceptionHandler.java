@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @since 2025/08/11 15:43
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
   /**
@@ -70,7 +72,7 @@ public class GlobalExceptionHandler {
     StringWriter sw = new StringWriter();
     exception.printStackTrace(new PrintWriter(sw, true));
     String str = sw.toString();
-    // logger.error(str);
+    log.info(str);
     return str;
   }
 }

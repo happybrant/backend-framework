@@ -1,7 +1,6 @@
 package com.framework.backend.common;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 
@@ -11,7 +10,6 @@ import lombok.Getter;
  * @since 2025/08/11 15:45
  */
 @Getter
-@JsonFilter("myPage")
 @JsonIgnoreProperties({"size", "current"})
 public class MyPage<T> extends Page<T> {
   /** 每页显示记录数量 */

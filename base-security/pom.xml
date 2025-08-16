@@ -6,7 +6,6 @@
         <groupId>com.framework.backend</groupId>
         <artifactId>backend-framework</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>base-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>

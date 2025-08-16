@@ -3,6 +3,7 @@ package com.framework.backend.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.framework.backend.common.MyBaseEntity;
 import com.framework.backend.common.MyPage;
+import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.entity.User;
 import com.framework.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2025/7/18 17:16
  * @description To do
  */
+@ResponseResult
 @RestController
 @RequestMapping("/security/user")
 @Tag(name = "UserController", description = "用户管理(0101)")
@@ -31,7 +33,6 @@ public class UserController {
 
   @Operation(description = "获取单条记录")
   @PostMapping("/getOne")
-  @PreAuthorize("hasAuthority('ROLE_admin')")
   public User getOne(@RequestBody User user) {
     QueryWrapper<User> queryWrapper = new QueryWrapper<>();
     queryWrapper.lambda().eq(MyBaseEntity::getId, user.getId());
