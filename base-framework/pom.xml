@@ -13,7 +13,7 @@
     <description>base-framework</description>
     <properties>
         <spring.doc.version>2.3.0</spring.doc.version>
-        <langs.version>3.17.0</langs.version>
+        <langs.version>3.18.0</langs.version>
         <fastjson.version>2.0.51</fastjson.version>
     </properties>
     <dependencies>

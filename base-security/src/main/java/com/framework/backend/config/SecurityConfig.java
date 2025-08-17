@@ -86,7 +86,8 @@ public class SecurityConfig {
       "/swagger-resources",
       "/swagger-resources/configuration/security",
       "/swagger-ui.html",
-      "/webjars/**"
+      "/webjars/**",
+      "security/role/test"
     };
     String[] permitAllUrls;
     // 当需要开放自定义的URL时
@@ -98,7 +99,6 @@ public class SecurityConfig {
     }
 
     http // 使用自己自定义的过滤器 去过滤接口请求
-        .addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class)
         .formLogin(
             formLogin ->
                 // 这里更改SpringSecurity的认证接口地址，这样就默认处理这个接口的登录请求了
@@ -128,9 +128,8 @@ public class SecurityConfig {
                     .requestMatchers(permitAllUrls)
                     .permitAll()
                     .requestMatchers(loginUrl)
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
+                    .permitAll())
+        //  .addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class)
         .exceptionHandling(
             (exceptionHandling) ->
                 exceptionHandling
@@ -141,6 +140,7 @@ public class SecurityConfig {
         .headers((headers) -> headers.frameOptions((HeadersConfigurer.FrameOptionsConfig::disable)))
         .headers(
             (headers) -> headers.frameOptions((HeadersConfigurer.FrameOptionsConfig::sameOrigin)));
+    http.addFilterBefore(checkTokenFilter, UsernamePasswordAuthenticationFilter.class);
     // 构建过滤链并返回
     return http.build();
   }

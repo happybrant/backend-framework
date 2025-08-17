@@ -47,27 +47,29 @@ public class CheckTokenFilter extends OncePerRequestFilter {
       FilterChain filterChain)
       throws ServletException, IOException {
     // 获取请求的url(读取配置文件的url)
-    String url = httpServletRequest.getRequestURI();
-    if (StringUtils.contains(httpServletRequest.getServletPath(), "swagger")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "webjars")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "v3")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "profile")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "swagger-ui")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "swagger-resources")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "csrf")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "favicon")
-        || StringUtils.contains(httpServletRequest.getServletPath(), "v2")) {
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
-    } else if (StringUtils.equals(url, loginUrl)) {
-      // 是登录请求放行
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
-    } else {
-      // token验证（如果不是登录请求 验证token）
-      if (!url.equals(loginUrl)) {
-        validateToken(httpServletRequest);
-      }
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
+    //    String url = httpServletRequest.getRequestURI();
+    //    if (StringUtils.contains(httpServletRequest.getServletPath(), "swagger")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "webjars")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "v3")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "profile")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "swagger-ui")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "swagger-resources")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "csrf")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "favicon")
+    //        || StringUtils.contains(httpServletRequest.getServletPath(), "v2")) {
+    //      filterChain.doFilter(httpServletRequest, httpServletResponse);
+    //    } else if (StringUtils.equals(url, loginUrl)) {
+    //      // 是登录请求放行
+    //      filterChain.doFilter(httpServletRequest, httpServletResponse);
+    //    } else {
+    //      // token验证（如果不是登录请求 验证token）
+    //      if (!url.equals(loginUrl)) {
+    //        validateToken(httpServletRequest);
+    //      }
+    validateToken(httpServletRequest);
+    // 将请求转发给过滤器链下一个filter
+    filterChain.doFilter(httpServletRequest, httpServletResponse);
+    // }
   }
 
   // token验证
