@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.backend.mapper.UserMapper">
+    <select id="selectCountByRoleIds" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        security_user A
+        LEFT JOIN security_user_role_rel B ON A.id = B.user_id
+        LEFT JOIN security_role C ON B.role_id = C.id
+        WHERE C.id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectUserListByRoleId" resultType="com.framework.backend.model.entity.User">
+        SELECT
+        A.*
+        FROM
+        security_user A
+        LEFT JOIN security_user_role_rel B ON A.id = B.user_id
+        LEFT JOIN security_role C ON B.role_id = C.id
+        WHERE C.id = #{roleId}
+    </select>
+
+    <resultMap id="userMap" type="com.framework.backend.model.entity.User">
+
+    </resultMap>
+
+    <!--    <select id="selectOne" resultType="com.framework.backend.model.entity.User">-->
+    <!--        SELECT-->
+    <!--        A.*,C.`name`,C.`code`,E.`code`,E.`name`-->
+    <!--        FROM-->
+    <!--        security_user A-->
+    <!--        LEFT JOIN security_user_role_rel B ON A.id = B.user_id-->
+    <!--        LEFT JOIN security_role C ON B.role_id = C.id-->
+    <!--        left join security_authorization D ON C.id = D.role_id-->
+    <!--        left join security_resource E ON D.resource_id = E.id-->
+    <!--        WHERE A.id = 'eb6919e47b4118bf393032373beec98d'-->
+    <!--    </select>-->
+</mapper>

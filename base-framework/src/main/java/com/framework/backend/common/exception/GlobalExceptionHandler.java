@@ -6,7 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,6 +48,30 @@ public class GlobalExceptionHandler {
     else {
       return ResponseData.failed(businessException.getMessage());
     }
+  }
+
+  /**
+   * 参数检验异常
+   *
+   * @param ex
+   * @return
+   */
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseBody
+  public Object handleValidationException(MethodArgumentNotValidException ex) {
+    Map<String, String> errors = new HashMap<>();
+    ex.getBindingResult()
+        .getFieldErrors()
+        .forEach(
+            error -> {
+              errors.put(error.getField(), error.getDefaultMessage());
+            });
+
+    ResponseData<Map<String, String>> result = new ResponseData<>();
+    result.setCode(ResultCode.FAILED.getCode());
+    result.setMessage("参数校验不通过");
+    result.setData(errors);
+    return result;
   }
 
   /**

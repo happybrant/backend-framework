@@ -2,7 +2,9 @@ package com.framework.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.framework.backend.common.MyPage;
+import com.framework.backend.model.entity.Role;
 import com.framework.backend.model.entity.User;
+import java.util.List;
 
 /**
  * @author fucong
@@ -53,4 +55,28 @@ public interface UserService extends IService<User> {
    * @return
    */
   MyPage<User> pageList(User user);
+
+  /**
+   * 查看角色下用户数量
+   *
+   * @param roleIds
+   * @return
+   */
+  int getCountByRoleIds(List<String> roleIds);
+
+  /**
+   * 查看角色下的用户列表
+   *
+   * @param role
+   * @return
+   */
+  List<User> getUserListByRole(Role role);
+
+  /**
+   * 查看单条用户信息
+   *
+   * @param user
+   * @return
+   */
+  User getOne(User user);
 }

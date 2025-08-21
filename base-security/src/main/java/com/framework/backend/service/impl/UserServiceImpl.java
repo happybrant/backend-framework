@@ -6,6 +6,7 @@ import com.framework.backend.common.MyBaseEntity;
 import com.framework.backend.common.MyPage;
 import com.framework.backend.common.exception.BusinessException;
 import com.framework.backend.mapper.UserMapper;
+import com.framework.backend.model.entity.Role;
 import com.framework.backend.model.entity.User;
 import com.framework.backend.service.AuthorizationService;
 import com.framework.backend.service.RoleService;
@@ -53,9 +54,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void addUser(User user) {
-    if (StringUtils.isBlank(user.getUsername())) {
-      throw new BusinessException("账号不能为空！");
-    }
     if (StringUtils.isEmpty(user.getPassword())) {
       user.setPassword(defaultPwd);
     } else {
@@ -132,7 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void resetPwd(User user) {
-    if (StringUtils.isNotBlank(user.getId())) {
+    if (StringUtils.isBlank(user.getId())) {
       throw new BusinessException("用户id不能为空！");
     }
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -157,5 +155,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     MyPage<User> page = new MyPage<>(user.getCurrentPage(), user.getPageSize());
     page = baseMapper.selectPage(page, queryWrapper);
     return page;
+  }
+
+  @Override
+  public int getCountByRoleIds(List<String> roleIds) {
+    return baseMapper.selectCountByRoleIds(roleIds);
+  }
+
+  @Override
+  public List<User> getUserListByRole(Role role) {
+    if (StringUtils.isBlank(role.getId())) {
+      throw new BusinessException("角色id不能为空！");
+    }
+    return baseMapper.selectUserListByRoleId(role.getId());
+  }
+
+  @Override
+  public User getOne(User user) {
+    if (StringUtils.isBlank(user.getId())) {
+      throw new BusinessException("用户id不能为空！");
+    }
+    User entity = baseMapper.selectById(user.getId());
+    if (entity == null) {
+      throw new BusinessException("未找到对应用户！");
+    }
+    // 查找用户的角色列表
+    List<String> roles = roleService.getByUserId(user.getId());
+    List<String> resources = authorizationService.getByUserId(user.getId());
+    entity.setRoleCodes(roles);
+    entity.setPermissions(resources);
+    return entity;
   }
 }
