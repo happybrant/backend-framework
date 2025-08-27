@@ -79,4 +79,18 @@ public interface UserService extends IService<User> {
    * @return
    */
   User getOne(User user);
+
+  /**
+   * 启用用户
+   *
+   * @param user
+   */
+  void enableUser(User user);
+
+  /**
+   * 停用用户
+   *
+   * @param user
+   */
+  void disableUser(User user);
 }

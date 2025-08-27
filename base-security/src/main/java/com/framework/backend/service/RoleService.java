@@ -38,4 +38,18 @@ public interface RoleService extends IService<Role> {
    * @param ids
    */
   void removeRoleByIds(List<String> ids);
+
+  /**
+   * 启用角色
+   *
+   * @param role
+   */
+  void enableRole(Role role);
+
+  /**
+   * 停用角色
+   *
+   * @param role
+   */
+  void disableRole(Role role);
 }

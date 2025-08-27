@@ -74,6 +74,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String encodePwd = encoder.encode(user.getPassword());
     user.setPassword(encodePwd);
+    user.setStatus("active");
     save(user);
   }
 
@@ -185,5 +186,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     entity.setRoleCodes(roles);
     entity.setPermissions(resources);
     return entity;
+  }
+
+  @Override
+  public void enableUser(User user) {
+    if (StringUtils.isNotBlank(user.getId())) {
+      throw new BusinessException("用户id不能为空！");
+    }
+    user.setStatus("active");
+    updateById(user);
+  }
+
+  @Override
+  public void disableUser(User user) {
+    if (StringUtils.isNotBlank(user.getId())) {
+      throw new BusinessException("用户id不能为空！");
+    }
+    user.setStatus("disabled");
+    updateById(user);
   }
 }

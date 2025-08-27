@@ -54,6 +54,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     if (!list.isEmpty()) {
       throw new BusinessException("当前角色编码已存在！");
     }
+    role.setStatus("active");
     save(role);
   }
 
@@ -79,5 +80,23 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
       throw new BusinessException("当前选中角色下存在用户，无法删除！");
     }
     removeBatchByIds(roleIds);
+  }
+
+  @Override
+  public void enableRole(Role role) {
+    if (StringUtils.isNotBlank(role.getId())) {
+      throw new BusinessException("角色id不能为空！");
+    }
+    role.setStatus("active");
+    updateById(role);
+  }
+
+  @Override
+  public void disableRole(Role role) {
+    if (StringUtils.isNotBlank(role.getId())) {
+      throw new BusinessException("角色id不能为空！");
+    }
+    role.setStatus("disabled");
+    updateById(role);
   }
 }

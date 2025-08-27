@@ -21,6 +21,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -53,8 +55,6 @@ public class SecurityConfig {
   @Resource private MyLogoutSuccessHandler logoutSuccessHandler;
   @Resource private MyUserDetailsService userService;
 
-  // @Autowired public AuthenticationProvider myAuthenticationProvider;
-
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -63,7 +63,6 @@ public class SecurityConfig {
   /** 配置从http header中获取session id. */
   @Bean
   public HeaderHttpSessionIdResolver headerHttpSessionIdResolver() {
-    // HeaderHttpSessionIdResolver.xAuthToken();
     return new HeaderHttpSessionIdResolver("X-Auth-Token");
   }
 
@@ -109,7 +108,7 @@ public class SecurityConfig {
     }
 
     http // 使用自定义登录过滤器，登录时可以额外支持json数据格式参数
-        .addFilterAt(myLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(myLoginFilter(), UsernamePasswordAuthenticationFilter.class)
         .formLogin(
             formLogin ->
                 // 这里更改SpringSecurity的认证接口地址，这样就默认处理这个接口的登录请求了
@@ -174,6 +173,8 @@ public class SecurityConfig {
     myLoginFilter.setAuthenticationSuccessHandler(loginSuccessHandler);
     myLoginFilter.setAuthenticationFailureHandler(loginFailureHandler);
     myLoginFilter.setAuthenticationManager(authenticationManagerBean());
+    // 参考https://www.jb51.net/program/3104358pk.htm
+    myLoginFilter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
     return myLoginFilter;
   }
 
@@ -184,5 +185,10 @@ public class SecurityConfig {
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     // 创建ProviderManager，并注入自定义的AuthenticationProvider
     return new ProviderManager(authenticationProvider);
+  }
+
+  @Bean
+  HttpSessionEventPublisher httpSessionEventPublisher() {
+    return new HttpSessionEventPublisher();
   }
 }

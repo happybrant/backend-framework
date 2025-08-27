@@ -1,5 +1,6 @@
 package com.framework.backend.controller;
 
+import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.entity.Role;
 import com.framework.backend.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
  * @since 2025/7/18 17:16
  * @description To do
  */
+@ResponseResult
 @RestController
 @RequestMapping("/security/role")
-@Tag(name = "RoleController", description = "角色管理(0101)")
+@Tag(name = "RoleController", description = "角色管理(0102)")
 public class RoleController {
 
   @Autowired private RoleService roleService;
@@ -41,5 +43,19 @@ public class RoleController {
   @PostMapping("/delete")
   public void deleteRole(@RequestBody List<String> ids) {
     roleService.removeRoleByIds(ids);
+  }
+
+  @Operation(description = "启用角色")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
+  @PostMapping("/active")
+  public void enable(@RequestBody Role role) {
+    roleService.enableRole(role);
+  }
+
+  @Operation(description = "停用角色")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
+  @PostMapping("/disabled")
+  public void disable(@RequestBody Role role) {
+    roleService.disableRole(role);
   }
 }
