@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author fucong
@@ -26,13 +23,13 @@ public class RoleController {
   @Autowired private RoleService roleService;
 
   @Operation(description = "添加角色")
-  // @PreAuthorize("hasAuthority('ROLE_admin')")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/add")
   public void addRole(@Valid @RequestBody Role role) {
     roleService.addRole(role);
   }
 
-  @Operation(description = "添加角色")
+  @Operation(description = "修改角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/update")
   public void updateRole(@RequestBody Role role) {
@@ -40,6 +37,7 @@ public class RoleController {
   }
 
   @Operation(description = "批量删除角色")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/delete")
   public void deleteRole(@RequestBody List<String> ids) {
     roleService.removeRoleByIds(ids);

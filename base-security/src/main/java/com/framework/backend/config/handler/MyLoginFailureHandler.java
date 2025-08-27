@@ -2,7 +2,6 @@ package com.framework.backend.config.handler;
 
 import com.alibaba.fastjson2.JSON;
 import com.framework.backend.common.ResponseData;
-import com.framework.backend.config.exception.CustomerAuthenticationException;
 import com.framework.backend.enums.ResultCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +29,15 @@ public class MyLoginFailureHandler implements AuthenticationFailureHandler {
     httpServletResponse.setContentType("application/json;charset=utf-8");
     httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
+    String message = getMessage(exception);
+    // 设置返回格式
+    ResponseData<String> result = new ResponseData<>(ResultCode.LOGIN_FAIL.getCode(), message);
+    PrintWriter writer = httpServletResponse.getWriter();
+    writer.write(JSON.toJSONString(result));
+    writer.flush();
+  }
+
+  private static String getMessage(AuthenticationException exception) {
     String str;
     if (exception instanceof AccountExpiredException) {
       str = "账户过期，登录失败!";
@@ -43,16 +51,9 @@ public class MyLoginFailureHandler implements AuthenticationFailureHandler {
       str = "账户被锁，登录失败!";
     } else if (exception instanceof InternalAuthenticationServiceException) {
       str = "账户不存在，登录失败!";
-    } else if (exception instanceof CustomerAuthenticationException) {
-      // token验证失败
-      str = exception.getMessage();
     } else {
       str = "登录失败!";
     }
-    // 设置返回格式
-    ResponseData<String> result = new ResponseData<>(ResultCode.LOGIN_FAIL.getCode(), str);
-    PrintWriter writer = httpServletResponse.getWriter();
-    writer.write(JSON.toJSONString(result));
-    writer.flush();
+    return str;
   }
 }

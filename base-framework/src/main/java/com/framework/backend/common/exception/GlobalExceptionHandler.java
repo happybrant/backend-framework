@@ -4,8 +4,6 @@ import com.framework.backend.common.ResponseData;
 import com.framework.backend.enums.ResultCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -72,34 +70,5 @@ public class GlobalExceptionHandler {
     result.setMessage("参数校验不通过");
     result.setData(errors);
     return result;
-  }
-
-  /**
-   * 系统中的所有Exception异常
-   *
-   * @param request
-   * @param response
-   * @param exception
-   * @return
-   */
-  @ExceptionHandler(Exception.class)
-  @ResponseBody
-  public Object commonException(
-      HttpServletRequest request, HttpServletResponse response, Exception exception) {
-    response.setStatus(ResultCode.FAILED.getCode());
-    ResponseData<String> result = new ResponseData<>();
-    result.setCode(ResultCode.FAILED.getCode());
-    result.setMessage("系统异常");
-    String str = getExceptionStackTrace(exception);
-    result.setData(str);
-    return result;
-  }
-
-  private String getExceptionStackTrace(Exception exception) {
-    StringWriter sw = new StringWriter();
-    exception.printStackTrace(new PrintWriter(sw, true));
-    String str = sw.toString();
-    log.info(str);
-    return str;
   }
 }

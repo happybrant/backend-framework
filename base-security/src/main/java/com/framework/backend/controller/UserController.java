@@ -2,10 +2,12 @@ package com.framework.backend.controller;
 
 import com.framework.backend.common.MyPage;
 import com.framework.backend.common.result.ResponseResult;
+import com.framework.backend.model.entity.Role;
 import com.framework.backend.model.entity.User;
 import com.framework.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +58,14 @@ public class UserController {
 
   @Operation(description = "重置用户密码")
   @PostMapping("/resetPwd")
+  @PreAuthorize("hasAuthority('ROLE_admin')")
   public void resetPwd(@RequestBody User user) {
     userService.resetPwd(user);
+  }
+
+  @Operation(description = "获取角色下所有的用户")
+  @PostMapping("/listUserByRole")
+  public List<User> listUserByRole(@RequestBody Role role) {
+    return userService.getUserListByRole(role);
   }
 }
