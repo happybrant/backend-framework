@@ -1,8 +1,9 @@
 package com.framework.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.framework.backend.model.dto.RoleUserDto;
+import com.framework.backend.model.dto.UserRoleDto;
 import com.framework.backend.model.entity.UserRoleRel;
-import java.util.List;
 
 /**
  * @author fucong
@@ -12,9 +13,16 @@ import java.util.List;
 public interface UserRoleRelService extends IService<UserRoleRel> {
 
   /**
-   * 绑定用户和角色
+   * 绑定用户的角色
    *
-   * @param userRoleRelList
+   * @param userRoleDto
    */
-  void bindUserRole(List<UserRoleRel> userRoleRelList);
+  void bindUserRole(UserRoleDto userRoleDto);
+
+  /**
+   * 绑定角色下的用户
+   *
+   * @param roleUserDto
+   */
+  void bindRoleUser(RoleUserDto roleUserDto);
 }

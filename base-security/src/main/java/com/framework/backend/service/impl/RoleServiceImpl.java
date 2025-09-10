@@ -61,7 +61,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
   @Override
   public void updateRole(Role role) {
     if (StringUtils.isNotBlank(role.getId())) {
-      throw new BusinessException("用户id不能为空！");
+      throw new BusinessException("角色id不能为空！");
     }
     // 查看角色编码有没有重复
     QueryWrapper<Role> queryWrapper = new QueryWrapper<>();

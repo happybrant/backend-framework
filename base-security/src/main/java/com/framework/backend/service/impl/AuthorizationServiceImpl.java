@@ -1,7 +1,9 @@
 package com.framework.backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.framework.backend.mapper.AuthorizationMapper;
+import com.framework.backend.model.dto.RoleResourceDto;
 import com.framework.backend.model.entity.Authorization;
 import com.framework.backend.model.entity.Resource;
 import com.framework.backend.service.AuthorizationService;
@@ -26,5 +28,24 @@ public class AuthorizationServiceImpl extends ServiceImpl<AuthorizationMapper, A
       permissions = authorizations.stream().map(Resource::getCode).toList();
     }
     return permissions;
+  }
+
+  @Override
+  public void bindRoleResource(RoleResourceDto roleResourceDto) {
+    // 移除该角色下的所有资源
+    QueryWrapper<Authorization> queryWrapper = new QueryWrapper<>();
+    queryWrapper.lambda().eq(Authorization::getRoleId, roleResourceDto.getRoleId());
+    remove(queryWrapper);
+    // 添加新资源
+    if (roleResourceDto.getResourceIds() != null && !roleResourceDto.getResourceIds().isEmpty()) {
+      List<Authorization> authorizationList = new ArrayList<>();
+      for (String resourceId : roleResourceDto.getResourceIds()) {
+        Authorization authorization = new Authorization();
+        authorization.setResourceId(resourceId);
+        authorization.setRoleId(roleResourceDto.getRoleId());
+        authorizationList.add(authorization);
+      }
+      saveBatch(authorizationList);
+    }
   }
 }

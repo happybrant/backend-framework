@@ -1,7 +1,9 @@
 package com.framework.backend.controller;
 
 import com.framework.backend.common.result.ResponseResult;
+import com.framework.backend.model.dto.RoleResourceDto;
 import com.framework.backend.model.entity.Role;
+import com.framework.backend.service.AuthorizationService;
 import com.framework.backend.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
   @Autowired private RoleService roleService;
+  @Autowired private AuthorizationService authorizationService;
 
   @Operation(description = "添加角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
@@ -57,5 +60,11 @@ public class RoleController {
   @PostMapping("/disabled")
   public void disable(@RequestBody Role role) {
     roleService.disableRole(role);
+  }
+
+  @Operation(description = "绑定角色下的资源")
+  @PostMapping("/bindRoleResource")
+  public void bindRoleResource(@RequestBody @Valid RoleResourceDto roleResourceDto) {
+    authorizationService.bindRoleResource(roleResourceDto);
   }
 }

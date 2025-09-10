@@ -1,6 +1,7 @@
 package com.framework.backend.common;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serial;
@@ -19,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class MyBaseEntity implements Serializable {
   @Serial private static final long serialVersionUID = 1L;
 
-  @TableId(value = "ID")
+  @TableId(value = "ID", type = IdType.ASSIGN_UUID)
   protected String id;
 
   /** 创建用户 */

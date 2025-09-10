@@ -13,9 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * 使用自定义登录过滤器，登录时可以额外支持json数据格式参数
- *
- * @author xiafeng
+ * @author fucong
+ * @since 2025/07/11 17:07
+ * @description 使用自定义登录过滤器，登录时可以额外支持json数据格式参数
  */
 public class MyLoginFilter extends UsernamePasswordAuthenticationFilter {
   @SneakyThrows

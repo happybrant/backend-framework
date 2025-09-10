@@ -1,6 +1,7 @@
 package com.framework.backend.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.framework.backend.model.dto.RoleResourceDto;
 import com.framework.backend.model.entity.Authorization;
 import java.util.List;
 
@@ -18,4 +19,11 @@ public interface AuthorizationService extends IService<Authorization> {
    * @return
    */
   List<String> getByUserId(String userId);
+
+  /**
+   * 绑定角色资源关系
+   *
+   * @param roleResourceDto
+   */
+  void bindRoleResource(RoleResourceDto roleResourceDto);
 }

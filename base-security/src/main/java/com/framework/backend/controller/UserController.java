@@ -3,9 +3,10 @@ package com.framework.backend.controller;
 import com.framework.backend.common.MyPage;
 import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.dto.LoginParameter;
+import com.framework.backend.model.dto.RoleUserDto;
+import com.framework.backend.model.dto.UserRoleDto;
 import com.framework.backend.model.entity.Role;
 import com.framework.backend.model.entity.User;
-import com.framework.backend.model.entity.UserRoleRel;
 import com.framework.backend.service.UserRoleRelService;
 import com.framework.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,9 +128,15 @@ public class UserController {
     return userService.getUserListByRole(role);
   }
 
-  @Operation(description = "绑定用户角色")
+  @Operation(description = "绑定用户下的角色")
   @PostMapping("/bindUserRole")
-  public void bindUserRole(@RequestBody List<UserRoleRel> userRoleRelList) {
-    userRoleRelService.bindUserRole(userRoleRelList);
+  public void bindUserRole(@RequestBody @Valid UserRoleDto userRoleDto) {
+    userRoleRelService.bindUserRole(userRoleDto);
+  }
+
+  @Operation(description = "绑定角色的用户")
+  @PostMapping("/bindRoleUser")
+  public void bindRoleUser(@RequestBody @Valid RoleUserDto roleUserDto) {
+    userRoleRelService.bindRoleUser(roleUserDto);
   }
 }

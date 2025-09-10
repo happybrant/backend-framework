@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,10 +24,12 @@ public class Resource extends MyBaseEntity {
 
   @Serial private static final long serialVersionUID = 1L;
 
+  @NotBlank(message = "资源名称不能为空")
   @Schema(description = "资源名称")
   @TableField(value = "name", keepGlobalFormat = true)
   private String name;
 
+  @NotBlank(message = "资源编码不能为空")
   @Schema(description = "资源编码")
   @TableField(value = "code", keepGlobalFormat = true)
   private String code;
@@ -35,6 +38,7 @@ public class Resource extends MyBaseEntity {
   @TableField("parent_id")
   private String parentId;
 
+  @NotBlank(message = "资源分类不能为空")
   @Schema(description = "资源分类：menu-菜单,button-按钮")
   @TableField(value = "type", keepGlobalFormat = true)
   private String type;

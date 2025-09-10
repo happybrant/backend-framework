@@ -44,6 +44,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>${langs.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.framework.backend</groupId>
+            <artifactId>base-framework</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
