@@ -1,9 +1,7 @@
 package com.framework.backend;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author fucong
@@ -11,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @description To do
  */
 @SpringBootApplication
-@MapperScan("com.framework.backend.mapper")
-public class BaseSecurityApplication implements WebMvcConfigurer {
+// @MapperScan("com.framework.backend.*")
+public class BaseSecurityApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(BaseSecurityApplication.class, args);

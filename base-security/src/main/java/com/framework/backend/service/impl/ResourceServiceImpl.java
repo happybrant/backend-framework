@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author fucong
- * @description 角色服务实现类
- * @since 2025/6/26 13:48
+ * @description 资源服务实现类
+ * @since 2025/9/12 13:48
  */
 @Service
 public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource>

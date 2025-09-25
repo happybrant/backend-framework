@@ -2,7 +2,6 @@ package com.framework.backend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.framework.backend.common.MyBaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serial;
@@ -17,7 +16,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("security_authorization")
-@JsonFilter("security_authorization")
 @Schema(description = "授权表")
 public class Authorization extends MyBaseEntity {
   @Serial private static final long serialVersionUID = 1L;

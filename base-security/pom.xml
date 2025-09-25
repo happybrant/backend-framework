@@ -10,14 +10,15 @@
     <artifactId>base-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>base-security</name>
-    <description>base-security</description>
-    <properties>
-        <jjwt.version>0.12.5</jjwt.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.framework.backend</groupId>
             <artifactId>base-framework</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.framework.backend</groupId>
+            <artifactId>base-utility</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
