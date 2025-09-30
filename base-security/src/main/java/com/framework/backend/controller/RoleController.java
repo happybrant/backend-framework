@@ -1,5 +1,6 @@
 package com.framework.backend.controller;
 
+import com.framework.backend.annotation.Log;
 import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.dto.RoleResourceDto;
 import com.framework.backend.model.entity.Role;
@@ -27,6 +28,7 @@ public class RoleController {
   @Autowired private RoleService roleService;
   @Autowired private AuthorizationService authorizationService;
 
+  @Log(value = "添加角色", module = "角色管理")
   @Operation(description = "添加角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/add")
@@ -34,6 +36,7 @@ public class RoleController {
     roleService.addRole(role);
   }
 
+  @Log(value = "修改角色", module = "角色管理")
   @Operation(description = "修改角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/update")
@@ -41,6 +44,7 @@ public class RoleController {
     roleService.updateRole(role);
   }
 
+  @Log(value = "批量删除角色", module = "角色管理")
   @Operation(description = "批量删除角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/delete")
@@ -48,6 +52,7 @@ public class RoleController {
     roleService.removeRoleByIds(ids);
   }
 
+  @Log(value = "启用角色", module = "角色管理")
   @Operation(description = "启用角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/active")
@@ -55,6 +60,7 @@ public class RoleController {
     roleService.enableRole(role);
   }
 
+  @Log(value = "停用角色", module = "角色管理")
   @Operation(description = "停用角色")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/disabled")
@@ -62,6 +68,7 @@ public class RoleController {
     roleService.disableRole(role);
   }
 
+  @Log(value = "绑定角色下的资源", module = "角色管理")
   @Operation(description = "绑定角色下的资源")
   @PostMapping("/bindRoleResource")
   public void bindRoleResource(@RequestBody @Valid RoleResourceDto roleResourceDto) {

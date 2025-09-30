@@ -1,5 +1,6 @@
 package com.framework.backend.controller;
 
+import com.framework.backend.annotation.Log;
 import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.entity.Resource;
 import com.framework.backend.service.ResourceService;
@@ -24,6 +25,7 @@ public class ResourceController {
 
   @Autowired private ResourceService resourceService;
 
+  @Log(value = "添加资源", module = "资源管理")
   @Operation(description = "添加资源")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/add")
@@ -31,6 +33,7 @@ public class ResourceController {
     resourceService.addResource(resource);
   }
 
+  @Log(value = "修改资源", module = "资源管理")
   @Operation(description = "修改资源")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/update")
@@ -38,6 +41,7 @@ public class ResourceController {
     resourceService.updateResource(resource);
   }
 
+  @Log(value = "批量删除资源", module = "资源管理")
   @Operation(description = "批量删除资源")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/delete")
@@ -45,6 +49,7 @@ public class ResourceController {
     resourceService.removeResourceByIds(ids);
   }
 
+  @Log(value = "启用资源", module = "资源管理")
   @Operation(description = "启用资源")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/active")
@@ -52,6 +57,7 @@ public class ResourceController {
     resourceService.enableResource(resource);
   }
 
+  @Log(value = "停用资源", module = "资源管理")
   @Operation(description = "停用资源")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/disabled")

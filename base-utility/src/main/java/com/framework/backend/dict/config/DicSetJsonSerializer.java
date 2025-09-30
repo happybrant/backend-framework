@@ -19,7 +19,9 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 
 /**
- * @author xiafeng
+ * @author fucong
+ * @description 字典集序列化
+ * @since 2025/9/25 16:27
  */
 public class DicSetJsonSerializer extends JsonSerializer<Object> implements ContextualSerializer {
 

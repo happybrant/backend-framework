@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @description 安全工具类，获取登录用户相关信息
  * @since 2025/7/18 15:43
  */
-public class SecurityUtil {
+public class SecurityUtils {
 
   /** 获取当前登录用户信息 */
   public static User getCurrentUser() {

@@ -1,5 +1,6 @@
 package com.framework.backend.controller;
 
+import com.framework.backend.annotation.Log;
 import com.framework.backend.common.MyPage;
 import com.framework.backend.common.result.ResponseResult;
 import com.framework.backend.model.dto.LoginParameter;
@@ -37,6 +38,7 @@ public class UserController {
   @Autowired private UserService userService;
   @Autowired private UserRoleRelService userRoleRelService;
 
+  @Log(value = "用户登录", module = "用户管理")
   @Operation(
       description = "用户登录",
       requestBody =
@@ -63,6 +65,7 @@ public class UserController {
     log.debug("--------------login---------------");
   }
 
+  @Log(value = "用户登出", module = "用户管理")
   @Operation(description = "用户登出")
   @PostMapping(value = "/logout")
   public void logout() {
@@ -82,6 +85,7 @@ public class UserController {
     return userService.getOne(user);
   }
 
+  @Log(value = "添加用户", module = "用户管理")
   @Operation(description = "添加用户")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/add")
@@ -89,18 +93,21 @@ public class UserController {
     userService.addUser(user);
   }
 
+  @Log(value = "修改用户信息", module = "用户管理")
   @Operation(description = "修改用户信息")
   @PostMapping("/update")
   public void updateUser(@RequestBody User user) {
     userService.updateUser(user);
   }
 
+  @Log(value = "修改用户密码", module = "用户管理")
   @Operation(description = "修改用户密码")
   @PostMapping("/updatePwd")
   public void updatePwd(@RequestBody User user) {
     userService.updatePwd(user);
   }
 
+  @Log(value = "重置用户密码", module = "用户管理")
   @Operation(description = "重置用户密码")
   @PostMapping("/resetPwd")
   @PreAuthorize("hasAuthority('ROLE_admin')")
@@ -108,6 +115,7 @@ public class UserController {
     userService.resetPwd(user);
   }
 
+  @Log(value = "启用用户", module = "用户管理")
   @Operation(description = "启用用户")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/active")
@@ -115,6 +123,7 @@ public class UserController {
     userService.enableUser(user);
   }
 
+  @Log(value = "用户登录", module = "用户管理")
   @Operation(description = "停用用户")
   @PreAuthorize("hasAuthority('ROLE_admin')")
   @PostMapping("/disabled")
@@ -128,13 +137,15 @@ public class UserController {
     return userService.getUserListByRole(role);
   }
 
+  @Log(value = "绑定用户下的角色", module = "用户管理")
   @Operation(description = "绑定用户下的角色")
   @PostMapping("/bindUserRole")
   public void bindUserRole(@RequestBody @Valid UserRoleDto userRoleDto) {
     userRoleRelService.bindUserRole(userRoleDto);
   }
 
-  @Operation(description = "绑定角色的用户")
+  @Log(value = "绑定角色下的用户", module = "用户管理")
+  @Operation(description = "绑定角色下的用户")
   @PostMapping("/bindRoleUser")
   public void bindRoleUser(@RequestBody @Valid RoleUserDto roleUserDto) {
     userRoleRelService.bindRoleUser(roleUserDto);

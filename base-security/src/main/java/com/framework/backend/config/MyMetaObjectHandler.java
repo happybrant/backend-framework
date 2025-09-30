@@ -2,7 +2,7 @@ package com.framework.backend.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.framework.backend.model.entity.User;
-import com.framework.backend.utils.SecurityUtil;
+import com.framework.backend.utils.SecurityUtils;
 import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
     this.strictInsertFill(metaObject, "lastUpdateTime", LocalDateTime.class, LocalDateTime.now());
     // 存在用户登录信息才自动填值
-    User user = SecurityUtil.getCurrentUser();
+    User user = SecurityUtils.getCurrentUser();
     if (user != null) {
       String userId = user.getId();
       this.strictInsertFill(metaObject, "createUser", String.class, userId);
@@ -38,7 +38,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     logger.debug("start update fill ....");
     this.strictUpdateFill(metaObject, "lastUpdateTime", LocalDateTime.class, LocalDateTime.now());
     // 存在用户登录信息才自动填值，方便定时任务之类不需要登录的功能使用
-    User user = SecurityUtil.getCurrentUser();
+    User user = SecurityUtils.getCurrentUser();
     if (user != null) {
       String userId = user.getId();
       this.strictUpdateFill(metaObject, "lastUpdateUser", String.class, userId);
