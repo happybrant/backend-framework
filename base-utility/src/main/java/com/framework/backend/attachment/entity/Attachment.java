@@ -28,11 +28,6 @@ public class Attachment extends MyBaseEntity {
   @TableField("origin_name")
   private String originName;
 
-  /** 在已有的基础路径上添加文件夹 */
-  @Schema(description = "文件存储地址")
-  @TableField("location")
-  private String location;
-
   @Schema(description = "文件存储方式/模式")
   @TableField("storage_mode")
   private String storageMode;

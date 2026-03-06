@@ -24,16 +24,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "AttachmentController", description = "附件管理(0105)")
 public class AttachmentController {
 
-  @Resource(name = "localFileOperator")
+  @Resource(name = "${base.utility.file.operator}")
   FileOperator fileOperator;
 
   @Operation(description = "附件上传")
   @RequestMapping(value = "/upload", method = RequestMethod.POST)
-  public void upload(@RequestParam("file") MultipartFile file) {
+  public String upload(@RequestParam("file") MultipartFile file) {
     if (file == null || file.isEmpty()) {
       throw new BusinessException("文件为空！");
     }
-    fileOperator.upload(file, "test");
+    return fileOperator.upload(file);
   }
 
   @Operation(description = "附件下载")

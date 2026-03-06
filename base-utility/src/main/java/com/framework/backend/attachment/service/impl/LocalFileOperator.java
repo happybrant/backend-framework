@@ -30,18 +30,17 @@ public class LocalFileOperator implements FileOperator {
   final String storageMode = "local";
 
   @Override
-  public void upload(MultipartFile file, String location) {
+  public String upload(MultipartFile file) {
     String originalFilename = file.getOriginalFilename();
     if (StringUtils.isEmpty(originalFilename)) {
       throw new BusinessException("文件名称不存在！");
     }
     String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
     String newFileName = UUID.randomUUID() + extension;
-    String directory = dir + "/" + location;
-    if (!createDirectory(directory)) {
+    if (!createDirectory(dir)) {
       throw new BusinessException("目录创建失败！");
     }
-    String path = dir + location + "/" + newFileName;
+    String path = dir + "/" + newFileName;
     try {
       file.transferTo(new File(path));
     } catch (IOException e) {
@@ -51,10 +50,10 @@ public class LocalFileOperator implements FileOperator {
     attachment.setName(newFileName);
     attachment.setOriginName(originalFilename);
     attachment.setFileSize(file.getSize());
-    attachment.setLocation(directory);
     attachment.setStorageMode(storageMode);
     attachment.setFullPath(path);
     attachmentService.save(attachment);
+    return attachment.getId();
   }
 
   @Override

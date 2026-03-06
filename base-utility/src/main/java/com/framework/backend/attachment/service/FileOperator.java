@@ -13,10 +13,16 @@ public interface FileOperator {
   /**
    * 上传文件
    *
-   * @param file
-   * @param location
+   * @param file 文件
+   * @return 文件id
    */
-  void upload(MultipartFile file, String location);
+  String upload(MultipartFile file);
 
+  /**
+   * 下载文件
+   *
+   * @param attachmentId 文件id
+   * @param response 响应
+   */
   void download(String attachmentId, HttpServletResponse response);
 }
