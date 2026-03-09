@@ -8,14 +8,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>base-utility</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${backend.framework.version}</version>
     <name>base-utility</name>
     <description>base-utility</description>
     <dependencies>
         <dependency>
             <groupId>com.framework.backend</groupId>
             <artifactId>base-framework</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${backend.framework.version}</version>
         </dependency>
         <!-- Minio分布式存储 -->
         <dependency>

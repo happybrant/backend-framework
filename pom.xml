@@ -7,6 +7,7 @@
         <module>base-utility</module>
         <module>base-framework</module>
         <module>base-security</module>
+        <module>backend-framework-starter</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,6 +22,7 @@
     <name>backend-framework</name>
     <description>backend-framework-parent</description>
     <properties>
+        <backend.framework.version>0.0.1-SNAPSHOT</backend.framework.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,6 +35,7 @@
         <langs-version>3.18.0</langs-version>
         <fastjson-version>2.0.51</fastjson-version>
         <spring-doc-version>2.6.0</spring-doc-version>
+        <spring-security-version>6.4.2</spring-security-version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +44,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot-dependencies-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring-security-version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
