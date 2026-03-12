@@ -17,6 +17,11 @@
             <version>${backend.framework.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.framework.backend</groupId>
+            <artifactId>base-utility</artifactId>
+            <version>${backend.framework.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -29,12 +34,4 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

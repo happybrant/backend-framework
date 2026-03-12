@@ -8,6 +8,7 @@
         <module>base-framework</module>
         <module>base-security</module>
         <module>backend-framework-starter</module>
+        <module>application-backend</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

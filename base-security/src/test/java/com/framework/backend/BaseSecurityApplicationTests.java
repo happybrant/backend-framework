@@ -10,5 +10,6 @@ public class BaseSecurityApplicationTests {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     String encode = encoder.encode("123456");
     System.out.println(encode);
+    System.out.println(Runtime.getRuntime().availableProcessors());
   }
 }

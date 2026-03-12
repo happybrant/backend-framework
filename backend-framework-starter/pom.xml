@@ -8,9 +8,9 @@
         <artifactId>backend-framework</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>base-framework-starter</artifactId>
+    <artifactId>backend-framework-starter</artifactId>
     <version>${backend.framework.version}</version>
-    <name>base-framework-starter</name>
+    <name>backend-framework-starter</name>
     <dependencies>
         <dependency>
             <groupId>com.framework.backend</groupId>
