@@ -1,5 +1,6 @@
 package com.framework.backend.config;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,11 +27,12 @@ public class MyLoginFilter extends UsernamePasswordAuthenticationFilter {
       throw new AuthenticationServiceException(
           "Authentication method not supported: " + request.getMethod());
     }
-    // 登录时支持json数据格式
+    // 登录时支持json数据格式（兼容 application/json;charset=UTF-8）
     String contentType = request.getContentType();
-    if (MediaType.APPLICATION_JSON_VALUE.equalsIgnoreCase(contentType)) {
+    if (contentType != null
+        && MediaType.parseMediaType(contentType).isCompatibleWith(MediaType.APPLICATION_JSON)) {
       Map<String, String> userInfo;
-      userInfo = new ObjectMapper().readValue(request.getInputStream(), Map.class);
+      userInfo = new ObjectMapper().readValue(request.getInputStream(), new TypeReference<>() {});
       String username = userInfo.get(getUsernameParameter());
       username = (username != null) ? username : "";
       username = username.trim();
