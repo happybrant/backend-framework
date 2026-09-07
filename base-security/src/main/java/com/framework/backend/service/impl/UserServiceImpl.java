@@ -80,7 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void updateUser(User user) {
-    if (StringUtils.isNotBlank(user.getId())) {
+    if (StringUtils.isBlank(user.getId())) {
       throw new BusinessException("用户id不能为空");
     }
     // 查看用户名有没有重复
@@ -98,21 +98,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void updatePwd(User user) {
-    if (StringUtils.isNotBlank(user.getId())) {
+    if (StringUtils.isBlank(user.getId())) {
       throw new BusinessException("用户id不能为空！");
     }
     User exist = getById(user.getId());
     String oldPassword = user.getOldPassword();
     String newPassword = user.getNewPassword();
-    if (StringUtils.isNotBlank(oldPassword)) {
+    if (StringUtils.isBlank(oldPassword)) {
       throw new BusinessException("原密码不能为空！");
     }
-    if (StringUtils.isNotBlank(newPassword)) {
+    if (StringUtils.isBlank(newPassword)) {
       throw new BusinessException("新密码不能为空！");
     }
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    String encodePwd = encoder.encode(oldPassword);
-    if (!exist.getPassword().equals(encodePwd)) {
+    if (!encoder.matches(oldPassword, exist.getPassword())) {
       throw new BusinessException("旧密码输入错误！");
     }
     Pattern pattern = Pattern.compile(passwordRegex);
@@ -190,7 +189,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void enableUser(User user) {
-    if (StringUtils.isNotBlank(user.getId())) {
+    if (StringUtils.isBlank(user.getId())) {
       throw new BusinessException("用户id不能为空！");
     }
     user.setStatus("active");
@@ -199,7 +198,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
   @Override
   public void disableUser(User user) {
-    if (StringUtils.isNotBlank(user.getId())) {
+    if (StringUtils.isBlank(user.getId())) {
       throw new BusinessException("用户id不能为空！");
     }
     user.setStatus("disabled");

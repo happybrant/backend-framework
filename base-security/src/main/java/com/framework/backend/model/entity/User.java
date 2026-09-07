@@ -64,6 +64,9 @@ public class User extends MyBaseEntity implements UserDetails {
   @TableField("remark")
   private String remark;
 
+  /**
+   * 状态：active（正常）、disabled（禁用）
+   */
   @Schema(description = "状态")
   @TableField("status")
   private String status;
@@ -104,6 +107,6 @@ public class User extends MyBaseEntity implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return "active".equals(status);
   }
 }

@@ -36,16 +36,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 public class SecurityLogAspect {
-  @Autowired ObjectMapper jsonMapper;
   @Autowired LogService logService;
 
   private static final ThreadLocal<LocalDateTime> TIME_THREAD_LOCAL = new ThreadLocal<>();
 
   /** 参数名发现器 */
-  private DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
+  private final DefaultParameterNameDiscoverer discoverer = new DefaultParameterNameDiscoverer();
 
   /** spel 表达式解析器 */
-  private ExpressionParser parser = new SpelExpressionParser();
+  private final ExpressionParser parser = new SpelExpressionParser();
 
   /** 定义一个切入点 */
   @Pointcut("@annotation(com.framework.backend.annotation.Log)")
@@ -75,7 +74,7 @@ public class SecurityLogAspect {
             .resolvePlaceholders(logAnnotation.value());
     // 解析spel获取实际内容
     String content =
-        parseExpression(methodSignature.getMethod(), (ProceedingJoinPoint) jp, expression);
+        parseExpression(methodSignature.getMethod(), jp, expression);
     log.setContent(content);
     log.setModule(logAnnotation.module());
     LocalDateTime startTime = TIME_THREAD_LOCAL.get();
@@ -150,11 +149,11 @@ public class SecurityLogAspect {
    * 解析 spel 表达式
    *
    * @param method 方法
-   * @param pjp
+   * @param pjp    连接点
    * @param spel 表达式
    * @return 执行spel表达式后的结果
    */
-  private String parseExpression(Method method, ProceedingJoinPoint pjp, String spel) {
+  private String parseExpression(Method method, JoinPoint pjp, String spel) {
     // 获取方法的形参名称
     String[] params = discoverer.getParameterNames(method);
     if (params == null) {

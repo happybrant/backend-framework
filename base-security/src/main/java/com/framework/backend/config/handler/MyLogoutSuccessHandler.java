@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
  */
 @Component("logoutSuccessHandler")
 public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
-  @Autowired private RedisCache redisCache;
 
   @Override
   public void onLogoutSuccess(
@@ -32,5 +31,6 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
     PrintWriter writer = response.getWriter();
     writer.write(JSON.toJSONString(result));
     writer.flush();
+    writer.close();
   }
 }

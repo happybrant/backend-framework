@@ -16,6 +16,7 @@ public enum ResultCode implements IErrorCode {
   /** 失败 */
   FAILED(HttpStatus.INTERNAL_SERVER_ERROR.value(), "系统内部错误"),
   UNAUTHORIZED(HttpStatus.UNAUTHORIZED.value(), "未授权访问"),
+  NOT_FOUND(HttpStatus.NOT_FOUND.value(), "请求的资源不存在"),
   FORBIDDEN(HttpStatus.FORBIDDEN.value(), "禁止访问"),
   LOGIN_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "用户账号或密码输入错误"),
   CAPTCHA_FAIL(HttpStatus.INTERNAL_SERVER_ERROR.value(), "验证码输入错误"),

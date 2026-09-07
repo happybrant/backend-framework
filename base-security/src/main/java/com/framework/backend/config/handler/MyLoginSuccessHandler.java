@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
  */
 @Component("myLoginSuccessHandler")
 public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
-  @Autowired private RedisCache redisCache;
 
   @Override
   public void onAuthenticationSuccess(
@@ -38,5 +37,6 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
     PrintWriter writer = httpServletResponse.getWriter();
     writer.write(JSON.toJSONString(result));
     writer.flush();
+    writer.close();
   }
 }

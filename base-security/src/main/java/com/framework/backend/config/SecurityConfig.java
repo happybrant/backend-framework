@@ -82,20 +82,15 @@ public class SecurityConfig {
       "/swagger-resources/**",
       "/v2/api-docs",
       "/v3/api-docs",
-      "/webjars/**",
       "/swagger-ui/**",
       "/v2/**",
       "/favicon.ico",
       "/webjars/springfox-swagger-ui/**",
       "/static/**",
-      "/webjars/**",
-      "/v2/api-docs",
       "/v2/feign-docs",
       "/swagger-resources/configuration/ui",
       "/swagger-resources",
-      "/swagger-resources/configuration/security",
-      "/swagger-ui.html",
-      "/webjars/**"
+      "/swagger-resources/configuration/security"
     };
     String[] permitAllUrls;
     // 当需要开放自定义的URL时
@@ -161,7 +156,7 @@ public class SecurityConfig {
   /**
    * 使用自定义登录过滤器，登录时可以额外支持json数据格式参数
    *
-   * @return
+   *
    */
   @Bean
   MyLoginFilter myLoginFilter() {

@@ -35,6 +35,7 @@ public class MyLoginFailureHandler implements AuthenticationFailureHandler {
     PrintWriter writer = httpServletResponse.getWriter();
     writer.write(JSON.toJSONString(result));
     writer.flush();
+    writer.close();
   }
 
   private static String getMessage(AuthenticationException exception) {
