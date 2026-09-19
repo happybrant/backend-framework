@@ -40,18 +40,18 @@ public class MyLoginFailureHandler implements AuthenticationFailureHandler {
 
   private static String getMessage(AuthenticationException exception) {
     String str;
-    if (exception instanceof AccountExpiredException) {
+    if (exception instanceof InternalAuthenticationServiceException) {
+      str = "账户不存在，登录失败!";
+    } else if (exception instanceof AccountExpiredException) {
       str = "账户过期，登录失败!";
-    } else if (exception instanceof BadCredentialsException) {
-      str = "用户名或密码错误，登录失败!";
-    } else if (exception instanceof CredentialsExpiredException) {
-      str = "密码过期，登录失败!";
-    } else if (exception instanceof DisabledException) {
+    }  else if (exception instanceof DisabledException) {
       str = "账户被禁用，登录失败!";
     } else if (exception instanceof LockedException) {
       str = "账户被锁，登录失败!";
-    } else if (exception instanceof InternalAuthenticationServiceException) {
-      str = "账户不存在，登录失败!";
+    }  else if (exception instanceof BadCredentialsException) {
+      str = "用户名或密码错误，登录失败!";
+    } else if (exception instanceof CredentialsExpiredException) {
+      str = "密码过期，登录失败!";
     } else {
       str = "登录失败!";
     }

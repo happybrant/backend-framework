@@ -43,7 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     queryWrapper.lambda().eq(User::getUsername, name).last("limit 1");
     User user = getOne(queryWrapper);
     if (user == null) {
-      throw new UsernameNotFoundException("用户不存在！");
+      return null;
     }
     List<String> roleCodes = roleService.getByUserId(user.getId());
     user.setRoleCodes(roleCodes);
